@@ -13,3 +13,11 @@ script:
 after_success:
 - npm install -g codecov
 - codecov
+deploy:
+  provider: npm
+  email: kei.itof@gmail.com
+  api_key:
+    secure: CP+ehylmTnc3PzP+EKnkRvVxozfnoWu5D5mWb7mB/mCchitny0bVph+XhMPSJleNa0o9vVDcYql2dDFLvdI2CH3PwZCXkEop7c1ftJASnEEif3otw6wKiWIp/hBcVNvTtqDCxEFsv+wtzxvSyAW2CdQy/WfOoTxhLu8LApZhwf+f1rEzbfMvDqjdzYxJJJTqhLmO3bkLgdOFIJUFQOo9ezdia6RBUmQbQLWcQKeEfh4T6HLu4MYZV/5loKRMCpoqQkS4lvsJpPZ+wEqDsplUVTdgfxJ0wZj7gzxImIM8VCJT5r2N/7iNJ0DAXt5Fbv7mvXLNBCAWlNNntoEaF0KTGOeNtuW1ICSJ1/S9KpWtQrTjSbbQ+sNXSYeIkxDu9XGL5CicEOfExV2ZSEWYA05+Hl1JlgIXuNeGkcSdvUtn9pSIg0XwZM2ycLFdnMilNn7jqkwWb+BuKFb5hoqFp1wKN+g3qPvxW59Tpi7kf2PZ56uBzUiFwJlOo2bwgnuBayiQ95Hwhrr3XuG1HVa7zhWpdGGBNuV3XP39HzuKgAK+hQA6PALXFh6SBID8Cu9vrFf6ieLfQc7GeJcgaZMuwjk7AA+5IrK8heRjlkUj5csvBKQbjKNYRJVwZIYgme5bFXVFaeF5OgrMm+Rq+EKK2sur1KZ/HYB9ofN60cWWuGCKY5A=
+  on:
+    tags: true
+    repo: kei-ito/n-lingual
