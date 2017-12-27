@@ -1,0 +1,34 @@
+{
+  "name": "n-lingual",
+  "version": "0.1.0",
+  "description": "A translation tool",
+  "author": {
+    "name": "Kei Ito",
+    "email": "kei.itof@gmail.com",
+    "url": "https://github.com/kei-ito"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=6"
+  },
+  "repository": "kei-ito/n-lingual",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "nlib-lint src test/*.js",
+    "test": "node test",
+    "test_coverage": "nyc --reporter=lcov --reporter=text npm test"
+  },
+  "dependencies": {
+    "@nlib/ast": "^0.2.2",
+    "@nlib/promisify": "^1.0.1",
+    "@nlib/write-file": "^1.0.1",
+    "acorn": "^5.2.1",
+    "magic-string": "^0.22.4"
+  },
+  "devDependencies": {
+    "@nlib/cp": "^1.0.1",
+    "@nlib/lint": "^2.2.1",
+    "@nlib/rm": "^1.0.0",
+    "@nlib/test": "^1.2.2"
+  }
+}
