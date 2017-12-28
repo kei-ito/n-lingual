@@ -21,7 +21,6 @@
   "dependencies": {
     "@nlib/ast": "^0.2.2",
     "@nlib/promisify": "^1.0.1",
-    "@nlib/write-file": "^1.0.1",
     "acorn": "^5.2.1",
     "magic-string": "^0.22.4"
   },
@@ -29,6 +28,6 @@
     "@nlib/cp": "^1.0.1",
     "@nlib/lint": "^2.2.1",
     "@nlib/rm": "^1.0.0",
-    "@nlib/test": "^1.2.2"
+    "@nlib/test": "^1.2.3"
   }
 }
