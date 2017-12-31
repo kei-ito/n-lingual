@@ -5,11 +5,11 @@
   "foo": {
     "en": "baz"
   },
+  "bar1": {
+    "en": null
+  },
   "bar2": {
     "en": "bar:{{bar}}"
-  },
-  "bar3": {
-    "en": "bar3"
   },
   "N points": {
     "en": "{{count}} {{count|point,points}}"

@@ -1,9 +1,11 @@
+const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 const promisify = require('@nlib/promisify');
 const readdir = promisify(fs.readdir);
+const readFile = promisify(fs.readFile);
 const test = require('@nlib/test');
-const {Entries} = require('..');
+const {Entries, Translator} = require('..');
 
 test('nLingual', (test) => {
 	const projects = [];
@@ -37,14 +39,28 @@ test('nLingual', (test) => {
 				test('load translations', () => {
 					return entries.loadJSON(path.join(directory, 'src', 'translation.json'));
 				});
-				test('toJSON', (test) => {
-					test.object(entries.toJSON(), {
-						foo: {
-							en: 'baz',
-						},
-						bar: {
-							en: null,
-						},
+				test('load an empty object', () => {
+					entries.load({});
+				});
+				test('load expected translations', (test) => {
+					return readFile(path.join(directory, 'expected-translation.json'), 'utf8')
+					.then(JSON.parse)
+					.then((expected) => {
+						test.object(entries.toJSON(), expected);
+					});
+				});
+				test('run tests', (test) => {
+					const translator = new Translator(entries);
+					return readFile(path.join(directory, 'tests.json'), 'utf8')
+					.then((json) => {
+						for (const [lang, tests] of JSON.parse(json)) {
+							translator.use(lang);
+							for (const [phrase, params, expected] of tests) {
+								test(`${phrase} ${JSON.stringify(params)} → ${expected}`, () => {
+									assert.equal(translator.translate(phrase, params), expected);
+								});
+							}
+						}
 					});
 				});
 			});

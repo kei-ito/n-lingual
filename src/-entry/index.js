@@ -19,10 +19,6 @@ module.exports = class Entry {
 		return this.entries.strictMode;
 	}
 
-	get index() {
-		return this.entries.indexOf(this);
-	}
-
 	get cwd() {
 		return this.entries.cwd;
 	}
@@ -38,26 +34,22 @@ module.exports = class Entry {
 		}
 	}
 
-	getTranslation(lang) {
-		let translation = this.translations[lang];
-		if (typeof translation !== 'string') {
-			const message = `[n-lingual] ${this.phrase} is not translated to ${lang}.`;
-			if (this.strictMode) {
-				const error = new Error(message);
-				error.code = 'ENOTTRANSLATED';
-				throw error;
-			} else {
-				console.log(message);
-			}
-			translation = null;
-		}
-		return translation;
-	}
-
 	toJSON() {
 		const translations = {};
 		for (const lang of this.langs) {
-			translations[lang] = this.translations[lang] || null;
+			let translation = this.translations[lang];
+			if (typeof translation !== 'string') {
+				const message = `[n-lingual] ${this.phrase} is not translated to ${lang}.`;
+				if (this.strictMode) {
+					const error = new Error(message);
+					error.code = 'ENOTTRANSLATED';
+					throw error;
+				} else {
+					console.log(message);
+				}
+				translation = null;
+			}
+			translations[lang] = translation;
 		}
 		translations['@'] = Array.from(this.src);
 		return [this.phrase, translations];

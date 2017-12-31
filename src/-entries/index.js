@@ -76,12 +76,14 @@ module.exports = class Entries extends Array {
 	}
 
 	load(data) {
+		if (data.langs) {
+			this.langs = data.langs;
+			delete data.langs;
+		}
 		for (const phrase of Object.keys(data)) {
 			const entry = this.find(phrase);
 			if (entry) {
-				const translations = data[phrase];
-				delete translations['@'];
-				Object.assign(entry.translations, translations);
+				entry.setTranslations(data[phrase]);
 			} else {
 				console.log(`Deleted: ${phrase}`);
 			}
@@ -93,7 +95,7 @@ module.exports = class Entries extends Array {
 			const [key, value] = entry.toJSON();
 			result[key] = value;
 			return result;
-		}, {});
+		}, {langs: this.langs});
 	}
 
 };

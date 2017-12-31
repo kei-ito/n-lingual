@@ -1,0 +1,14 @@
+[
+  [
+    "en",
+    [
+      ["foo", {}, "baz"],
+      ["foobar", {}, "foobar"],
+      ["N points", {"count": 0}, "0 points"],
+      ["N points", {"count": 1}, "1 point"],
+      ["N points", {"count": 2}, "2 points"],
+      ["N points", {"count": 3}, "3 points"],
+      ["bar2", {"bar": "foofoo"}, "bar:foofoo"]
+    ]
+  ]
+]
