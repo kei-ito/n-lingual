@@ -98,4 +98,15 @@ module.exports = class Entries extends Array {
 		}, {langs: this.langs});
 	}
 
+	toMinifiedJSON() {
+		const result = [];
+		for (const lang of Object.keys(this.langs)) {
+			result.push([lang, this.langs[lang], ...this.map((entry) => {
+				const [, translations] = entry.toJSON();
+				return translations[lang];
+			})]);
+		}
+		return result;
+	}
+
 };

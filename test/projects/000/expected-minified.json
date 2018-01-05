@@ -1,0 +1,146 @@
+[
+  [
+    "rule0",
+    0,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule1",
+    1,
+    null,
+    "bar:{{bar}}",
+    "baz",
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule2",
+    2,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule3",
+    3,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule4",
+    4,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule5",
+    5,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule6",
+    6,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule7",
+    7,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule8",
+    8,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule9",
+    9,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule10",
+    10,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule11",
+    11,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule12",
+    12,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule13",
+    13,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule14",
+    14,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule15",
+    15,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule16",
+    16,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ],
+  [
+    "rule17",
+    17,
+    null,
+    null,
+    null,
+    "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+  ]
+]

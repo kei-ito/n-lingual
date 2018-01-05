@@ -102,6 +102,8 @@ module.exports = class Translator extends Map {
 			return (n) => {
 				return n === 0 ? 0 : 1;
 			};
+		default:
+			throw new Error('Unknown rule');
 		}
 	}
 
@@ -134,7 +136,7 @@ module.exports = class Translator extends Map {
 		});
 	}
 
-}
+};
 
 function isIn(x, min, max) {
 	return x % 1 === 0 && min <= x && x <= max;

@@ -67,6 +67,18 @@ test('nLingual', (test) => {
 									}
 								});
 							}
+							test('Unknown rule', () => {
+								assert.throws(() => {
+									translator.use();
+								});
+							});
+						});
+					});
+					test('toMinifiedJSON', () => {
+						return readFile(path.join(directory, 'expected-minified.json'), 'utf8')
+						.then(JSON.parse)
+						.then((expected) => {
+							test.object(entries.toMinifiedJSON(), expected);
 						});
 					});
 				});
