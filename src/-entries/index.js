@@ -1,8 +1,10 @@
 const console = require('console');
 const acorn = require('acorn');
+const MagicString = require('magic-string');
 const {walker} = require('@nlib/ast');
 const Entry = require('../-entry');
 const LineBreaks = require('../-line-breaks');
+const noop = () => {};
 
 module.exports = class Entries extends Array {
 
@@ -39,39 +41,40 @@ module.exports = class Entries extends Array {
 	add({phrase, src, line}) {
 		let found = this.find(phrase);
 		if (!found) {
-			let label = phrase.toLowerCase();
 			found = new Entry(phrase, this);
-			for (let i = 0; i < this.length; i++) {
-				const entry = this[i];
-				if (label < entry.phrase.toLowerCase()) {
-					this.splice(i, 0, found);
-					label = null;
-					break;
-				}
-			}
-			if (label) {
-				this.push(found);
-			}
+			this.push(found);
 		}
 		found.addSrc(src, line);
 		return found;
 	}
 
-	parse(code, src) {
+	parse(code, src, fn = noop) {
 		const ast = acorn.parse(code, this.acorn);
 		const lineBreaks = new LineBreaks(code);
 		for (const {type, callee, arguments: args} of walker(ast)) {
 			if (type === 'CallExpression' && this.functionNames.includes(callee.name) && args) {
 				const [arg] = args;
 				if (arg) {
-					this.add({
+					const entry = this.add({
 						phrase: arg.value,
 						src,
 						line: lineBreaks.lineAt(arg.start),
 					});
+					fn(entry, arg);
 				}
 			}
 		}
+	}
+
+	minify(code, src) {
+		const s = new MagicString(code);
+		this.parse(code, src, (entry, node) => {
+			s.overwrite(node.start, node.end, `${entry.index}`);
+		});
+		return {
+			code: s.toString(),
+			map: s.generateMap(),
+		};
 	}
 
 	load([langs, ...entries]) {

@@ -23,6 +23,10 @@ module.exports = class Entry {
 		return this.entries.cwd;
 	}
 
+	get index() {
+		return this.entries.indexOf(this);
+	}
+
 	addSrc(src, line) {
 		src = (path.isAbsolute(src) ? path.relative(this.cwd, src) : src).split(path.sep).join('/');
 		this.src.add(`${src}:${line}`);

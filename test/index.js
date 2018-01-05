@@ -59,7 +59,7 @@ test('nLingual', (test) => {
 							test.object(entries.toJSON(), expected);
 						});
 					});
-					test('toMinifiedJSON', () => {
+					test('toMinifiedJSON', (test) => {
 						return readFile(path.join(directory, 'expected-minified.json'), 'utf8')
 						.then(JSON.parse)
 						.then((expected) => {

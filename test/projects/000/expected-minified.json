@@ -10,9 +10,9 @@
   [
     "rule1",
     1,
+    "baz",
     null,
     "bar:{{bar}}",
-    "baz",
     "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
   ],
   [

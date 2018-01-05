@@ -19,14 +19,14 @@
     "rule16": 16,
     "rule17": 17
   },
+  ["foo", {
+    "rule1": "baz"
+  }],
   ["bar1", {
     "rule1": null
   }],
   ["bar2", {
     "rule1": "bar:{{bar}}"
-  }],
-  ["foo", {
-    "rule1": "baz"
   }],
   ["N days", {
     "rule0": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
