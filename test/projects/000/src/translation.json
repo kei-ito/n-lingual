@@ -1,17 +1,51 @@
 {
   "langs": {
-    "en": 1
+    "rule0": 0,
+    "rule1": 1,
+    "rule2": 2,
+    "rule3": 3,
+    "rule4": 4,
+    "rule5": 5,
+    "rule6": 6,
+    "rule7": 7,
+    "rule8": 8,
+    "rule9": 9,
+    "rule10": 10,
+    "rule11": 11,
+    "rule12": 12,
+    "rule13": 13,
+    "rule14": 14,
+    "rule15": 15,
+    "rule16": 16,
+    "rule17": 17
   },
   "foo": {
-    "en": "baz"
+    "rule1": "baz"
   },
   "bar2": {
-    "en": "bar:{{bar}}"
+    "rule1": "bar:{{bar}}"
   },
   "bar3": {
-    "en": "bar3"
+    "rule1": "bar3"
   },
-  "N points": {
-    "en": "{{count}} {{count|point,points}}"
+  "N days": {
+    "rule0": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule1": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule2": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule3": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule4": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule5": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule6": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule7": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule8": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule9": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule10": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule11": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule12": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule13": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule14": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule15": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule16": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+    "rule17": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
   }
 }
