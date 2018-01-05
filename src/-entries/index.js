@@ -1,9 +1,6 @@
-const fs = require('fs');
 const console = require('console');
 const acorn = require('acorn');
 const {walker} = require('@nlib/ast');
-const promisify = require('@nlib/promisify');
-const readFile = promisify(fs.readFile);
 const Entry = require('../-entry');
 const LineBreaks = require('../-line-breaks');
 
@@ -60,7 +57,7 @@ module.exports = class Entries extends Array {
 		return found;
 	}
 
-	parseCode(code, src) {
+	parse(code, src) {
 		const ast = acorn.parse(code, this.acorn);
 		const lineBreaks = new LineBreaks(code);
 		for (const {type, callee, arguments: args} of walker(ast)) {
@@ -75,19 +72,6 @@ module.exports = class Entries extends Array {
 				}
 			}
 		}
-	}
-
-	parseFile(file) {
-		return readFile(file, 'utf8')
-		.then((code) => this.parseCode(code, file));
-	}
-
-	loadJSON(file) {
-		return readFile(file, 'utf8')
-		.then(JSON.parse)
-		.then((data) => {
-			return this.load(data);
-		});
 	}
 
 	load([langs, ...entries]) {

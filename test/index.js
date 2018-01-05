@@ -34,14 +34,23 @@ test('nLingual', (test) => {
 					});
 					test('parse files', (test) => {
 						files.forEach((file, index) => {
-							const src = index % 2 === 0
-							? path.relative(process.cwd(), file)
-							: file;
-							test(src, () => entries.parseFile(src));
+							test(file, () => {
+								return readFile(file, 'utf8')
+								.then((code) => {
+									const src = index % 2 === 0
+									? path.relative(process.cwd(), file)
+									: file;
+									entries.parse(code, src);
+								});
+							});
 						});
 					});
 					test('load translations', () => {
-						return entries.loadJSON(path.join(directory, 'src', 'translation.json'));
+						return readFile(path.join(directory, 'src', 'translation.json'), 'utf8')
+						.then(JSON.parse)
+						.then((data) => {
+							entries.load(data);
+						});
 					});
 					test('load expected translations', (test) => {
 						return readFile(path.join(directory, 'expected-translation.json'), 'utf8')
@@ -125,12 +134,24 @@ test('nLingual', (test) => {
 						});
 					});
 					test('parse files', (test) => {
-						for (const file of files) {
-							test(file, () => entries.parseFile(file));
-						}
+						files.forEach((file, index) => {
+							test(file, () => {
+								return readFile(file, 'utf8')
+								.then((code) => {
+									const src = index % 2 === 0
+									? path.relative(process.cwd(), file)
+									: file;
+									entries.parse(code, src);
+								});
+							});
+						});
 					});
 					test('load translations', () => {
-						return entries.loadJSON(path.join(directory, 'src', 'translation.json'));
+						return readFile(path.join(directory, 'src', 'translation.json'), 'utf8')
+						.then(JSON.parse)
+						.then((data) => {
+							entries.load(data);
+						});
 					});
 					test('toJSON() throws an error', (test) => {
 						Promise.resolve()
