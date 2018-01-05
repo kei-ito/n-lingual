@@ -34,13 +34,24 @@ test('nLingual', (test) => {
 					});
 					test('parse files', (test) => {
 						files.forEach((file, index) => {
-							test(file, () => {
+							test(file, (test) => {
 								return readFile(file, 'utf8')
 								.then((code) => {
 									const src = index % 2 === 0
 									? path.relative(process.cwd(), file)
 									: file;
-									entries.parse(code, src);
+									test('parse', () => {
+										entries.parse(code, src);
+									});
+									test('minify', (test) => {
+										const result = entries.minify(code, src);
+										const splitted = file.split(path.sep);
+										splitted[splitted.length - 2] = 'minified';
+										return readFile(splitted.join(path.sep), 'utf8')
+										.then((expected) => {
+											test.lines(result.code, expected);
+										});
+									});
 								});
 							});
 						});
