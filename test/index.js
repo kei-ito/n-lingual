@@ -43,9 +43,6 @@ test('nLingual', (test) => {
 					test('load translations', () => {
 						return entries.loadJSON(path.join(directory, 'src', 'translation.json'));
 					});
-					test('load an empty object', () => {
-						entries.load({});
-					});
 					test('load expected translations', (test) => {
 						return readFile(path.join(directory, 'expected-translation.json'), 'utf8')
 						.then(JSON.parse)
@@ -53,32 +50,50 @@ test('nLingual', (test) => {
 							test.object(entries.toJSON(), expected);
 						});
 					});
-					test('run tests', (test) => {
-						const translator = new Translator(entries);
-						return readFile(path.join(directory, 'tests.json'), 'utf8')
-						.then((json) => {
-							for (const [lang, tests] of JSON.parse(json)) {
-								test(lang, (test) => {
-									translator.use(lang);
-									for (const [phrase, params, expected] of tests) {
-										test(`${phrase} ${JSON.stringify(params)} → ${expected}`, () => {
-											assert.equal(translator.translate(phrase, params), expected);
-										});
-									}
-								});
-							}
-							test('Unknown rule', () => {
-								assert.throws(() => {
-									translator.use();
-								});
-							});
-						});
-					});
 					test('toMinifiedJSON', () => {
 						return readFile(path.join(directory, 'expected-minified.json'), 'utf8')
 						.then(JSON.parse)
 						.then((expected) => {
-							test.object(entries.toMinifiedJSON(), expected);
+							test.object(entries.toMinifiedJSON({silent: true}), expected);
+						});
+					});
+					test('run tests', (test) => {
+						return readFile(path.join(directory, 'tests.json'), 'utf8')
+						.then((json) => {
+							JSON.parse(json)
+							.forEach(([lang, tests]) => {
+								test(lang, (test) => {
+									test('from JSON', (test) => {
+										const translator = new Translator(entries.toJSON({silent: true}));
+										test(`use ${lang}`, () => {
+											translator.use(lang);
+										});
+										for (const [phrase, params, expected] of tests) {
+											test(`${phrase} ${JSON.stringify(params)} → ${expected}`, () => {
+												assert.equal(translator.translate(phrase, params), expected);
+											});
+										}
+									});
+									test('from minifiedJSON', (test) => {
+										const translator = new Translator(entries.toMinifiedJSON({silent: true}));
+										test(`use ${lang}`, () => {
+											translator.use(lang);
+										});
+										for (const [phrase, params, expected] of tests) {
+											test(`${phrase} ${JSON.stringify(params)} → ${expected}`, () => {
+												const index = entries.findIndex(phrase);
+												assert.equal(translator.translate(0 <= index ? index : phrase, params), expected);
+											});
+										}
+									});
+								});
+							});
+							test('Unknown rule', () => {
+								assert.throws(() => {
+									const translator = new Translator(entries.toJSON({silent: true}));
+									translator.use();
+								});
+							});
 						});
 					});
 				});
@@ -117,9 +132,6 @@ test('nLingual', (test) => {
 					test('load translations', () => {
 						return entries.loadJSON(path.join(directory, 'src', 'translation.json'));
 					});
-					test('load an empty object', () => {
-						entries.load({});
-					});
 					test('toJSON() throws an error', (test) => {
 						Promise.resolve()
 						.then(() => entries.toJSON())
@@ -132,6 +144,25 @@ test('nLingual', (test) => {
 					});
 				});
 			}
+		});
+	});
+	test('Translator', (test) => {
+		test('set translations on construction', () => {
+			const translator = new Translator([
+				{en: 1},
+				['foo', {en: 'bar'}]
+			]);
+			translator.use('en');
+			assert.equal(translator.translate('foo'), 'bar');
+		});
+		test('set translations later', () => {
+			const translator = new Translator();
+			translator.load([
+				{en: 1},
+				['foo', {en: 'bar'}]
+			]);
+			translator.use('en');
+			assert.equal(translator.translate('foo'), 'bar');
 		});
 	});
 });

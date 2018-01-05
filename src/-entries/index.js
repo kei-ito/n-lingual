@@ -31,18 +31,33 @@ module.exports = class Entries extends Array {
 		});
 	}
 
+	findIndex(phrase) {
+		return super.findIndex((entry) => entry.phrase === phrase);
+	}
+
 	find(phrase) {
-		return super.find((entry) => entry.phrase === phrase);
+		return this[this.findIndex(phrase)];
 	}
 
 	add({phrase, src, line}) {
-		let ph = this.find(phrase);
-		if (!ph) {
-			ph = new Entry(phrase, this);
-			this.push(ph);
+		let found = this.find(phrase);
+		if (!found) {
+			let label = phrase.toLowerCase();
+			found = new Entry(phrase, this);
+			for (let i = 0; i < this.length; i++) {
+				const entry = this[i];
+				if (label < entry.phrase.toLowerCase()) {
+					this.splice(i, 0, found);
+					label = null;
+					break;
+				}
+			}
+			if (label) {
+				this.push(found);
+			}
 		}
-		ph.addSrc(src, line);
-		return ph;
+		found.addSrc(src, line);
+		return found;
 	}
 
 	parseCode(code, src) {
@@ -75,34 +90,30 @@ module.exports = class Entries extends Array {
 		});
 	}
 
-	load(data) {
-		if (data.langs) {
-			this.langs = data.langs;
-			delete data.langs;
-		}
-		for (const phrase of Object.keys(data)) {
+	load([langs, ...entries]) {
+		this.langs = langs;
+		for (const [phrase, translations] of entries) {
 			const entry = this.find(phrase);
 			if (entry) {
-				entry.setTranslations(data[phrase]);
+				entry.setTranslations(translations);
 			} else {
 				console.log(`Deleted: ${phrase}`);
 			}
 		}
 	}
 
-	toJSON() {
-		return this.reduce((result, entry) => {
-			const [key, value] = entry.toJSON();
-			result[key] = value;
-			return result;
-		}, {langs: this.langs});
+	toJSON(options) {
+		return [
+			this.langs,
+			...super.map((entry) => entry.toJSON(options))
+		];
 	}
 
-	toMinifiedJSON() {
+	toMinifiedJSON(options) {
 		const result = [];
 		for (const lang of Object.keys(this.langs)) {
-			result.push([lang, this.langs[lang], ...this.map((entry) => {
-				const [, translations] = entry.toJSON();
+			result.push([lang, this.langs[lang], ...super.map((entry) => {
+				const [, translations] = entry.toJSON(options);
 				return translations[lang];
 			})]);
 		}

@@ -34,7 +34,7 @@ module.exports = class Entry {
 		}
 	}
 
-	toJSON() {
+	toJSON({silent = false} = {}) {
 		const translations = {};
 		for (const lang of this.langs) {
 			let translation = this.translations[lang];
@@ -44,7 +44,7 @@ module.exports = class Entry {
 					const error = new Error(message);
 					error.code = 'ENOTTRANSLATED';
 					throw error;
-				} else {
+				} else if (!silent) {
 					console.log(message);
 				}
 				translation = null;

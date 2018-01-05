@@ -108,18 +108,53 @@ module.exports = class Translator extends Map {
 	}
 
 	constructor(entries) {
+		super();
+		if (entries) {
+			this.load(entries);
+		}
+	}
+
+	load(entries) {
+		const langs = {};
+		const translations = {};
+		let phrases;
+		if (Array.isArray(entries[0])) {
+			for (const entry of entries) {
+				const lang = entry.shift();
+				const rule = entry.shift();
+				langs[lang] = rule;
+				translations[lang] = entry;
+			}
+		} else {
+			Object.assign(langs, entries.shift());
+			phrases = entries.map((entry) => entry[0]);
+			for (const lang of Object.keys(langs)) {
+				translations[lang] = entries.map(([, translations]) => translations[lang]);
+			}
+		}
 		Object.assign(
-			super(),
-			{entries}
+			this,
+			{
+				langs,
+				phrases,
+				translations,
+			}
 		);
 	}
 
 	use(lang) {
 		this.lang = lang;
-		this.pluralFunction = Translator.pluralFunction(this.entries.langs[lang]);
+		this.pluralFunction = Translator.pluralFunction(this.langs[lang]);
 		this.clear();
-		for (const entry of this.entries) {
-			this.set(entry.phrase, entry.translations[lang]);
+		const translations = this.translations[lang];
+		if (this.phrases) {
+			for (let i = 0; i < translations.length; i++) {
+				this.set(this.phrases[i], translations[i]);
+			}
+		} else {
+			for (let i = 0; i < translations.length; i++) {
+				this.set(i, translations[i]);
+			}
 		}
 	}
 

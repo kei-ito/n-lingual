@@ -1,17 +1,17 @@
-{
-  "langs": {
+[
+  {
     "en": 1
   },
-  "foo": {
+  ["foo", {
     "en": "baz"
-  },
-  "bar2": {
+  }],
+  ["bar2", {
     "en": "bar:{{bar}}"
-  },
-  "bar3": {
+  }],
+  ["bar3", {
     "en": "bar3"
-  },
-  "N points": {
+  }],
+  ["N points", {
     "en": "{{count}} {{count|point,points}}"
-  }
-}
+  }]
+]

@@ -1,5 +1,5 @@
-{
-  "langs": {
+[
+  {
     "rule0": 0,
     "rule1": 1,
     "rule2": 2,
@@ -19,16 +19,16 @@
     "rule16": 16,
     "rule17": 17
   },
-  "foo": {
-    "rule1": "baz"
-  },
-  "bar1": {
+  ["bar1", {
     "rule1": null
-  },
-  "bar2": {
+  }],
+  ["bar2", {
     "rule1": "bar:{{bar}}"
-  },
-  "N days": {
+  }],
+  ["foo", {
+    "rule1": "baz"
+  }],
+  ["N days", {
     "rule0": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
     "rule1": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
     "rule2": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
@@ -47,5 +47,5 @@
     "rule15": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
     "rule16": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
     "rule17": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
-  }
-}
+  }]
+]
