@@ -150,7 +150,7 @@ test('nLingual', (test) => {
 		test('set translations on construction', () => {
 			const translator = new Translator([
 				{en: 1},
-				['foo', {en: 'bar'}]
+				['foo', {en: 'bar'}],
 			]);
 			translator.use('en');
 			assert.equal(translator.translate('foo'), 'bar');
@@ -159,7 +159,7 @@ test('nLingual', (test) => {
 			const translator = new Translator();
 			translator.load([
 				{en: 1},
-				['foo', {en: 'bar'}]
+				['foo', {en: 'bar'}],
 			]);
 			translator.use('en');
 			assert.equal(translator.translate('foo'), 'bar');

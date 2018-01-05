@@ -105,7 +105,7 @@ module.exports = class Entries extends Array {
 	toJSON(options) {
 		return [
 			this.langs,
-			...super.map((entry) => entry.toJSON(options))
+			...super.map((entry) => entry.toJSON(options)),
 		];
 	}
 
