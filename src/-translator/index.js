@@ -54,6 +54,7 @@ module.exports = class Translator extends Function {
 				translations,
 			}
 		);
+		this.use(this.lang in langs ? this.lang : Object.keys(langs)[0]);
 	}
 
 	use(lang) {
