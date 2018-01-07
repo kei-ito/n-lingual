@@ -90,7 +90,7 @@ test('nLingual', (test) => {
 										});
 										for (const [phrase, params, expected] of tests) {
 											test(`${phrase} ${JSON.stringify(params)} → ${expected}`, () => {
-												assert.equal(translator.translate(phrase, params), expected);
+												assert.equal(translator(phrase, params), expected);
 											});
 										}
 									});
@@ -102,7 +102,7 @@ test('nLingual', (test) => {
 										for (const [phrase, params, expected] of tests) {
 											test(`${phrase} ${JSON.stringify(params)} → ${expected}`, () => {
 												const index = entries.findIndex(phrase);
-												assert.equal(translator.translate(0 <= index ? index : phrase, params), expected);
+												assert.equal(translator(0 <= index ? index : phrase, params), expected);
 											});
 										}
 									});

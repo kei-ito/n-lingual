@@ -1,6 +1,6 @@
 const defaultPluralFunctions = require('../plural-rules');
 
-module.exports = class Translator extends Map {
+module.exports = class Translator extends Function {
 
 	constructor(entries, pluralFunctions = defaultPluralFunctions) {
 		Object.assign(
@@ -13,6 +13,11 @@ module.exports = class Translator extends Map {
 		if (entries) {
 			this.load(entries);
 		}
+		return new Proxy(this, {
+			apply(target, thisArg, argumentsList) {
+				return target.translate(...argumentsList);
+			},
+		});
 	}
 
 	load(entries) {
@@ -57,22 +62,23 @@ module.exports = class Translator extends Map {
 		if (!this.pluralFunction) {
 			throw new Error(`Invalid plural rule: ${this.langs[lang]}`);
 		}
-		this.clear();
+		const dictionary = new Map();
 		const translations = this.translations[lang];
 		if (this.phrases) {
 			for (let i = 0; i < translations.length; i++) {
-				this.set(this.phrases[i], translations[i]);
+				dictionary.set(this.phrases[i], translations[i]);
 			}
 		} else {
 			for (let i = 0; i < translations.length; i++) {
-				this.set(i, translations[i]);
+				dictionary.set(i, translations[i]);
 			}
 		}
+		this.dictionary = dictionary;
 		return this;
 	}
 
 	translate(phrase, params) {
-		const translated = this.get(phrase);
+		const translated = this.dictionary.get(phrase);
 		if (typeof translated === 'undefined') {
 			return phrase;
 		}
