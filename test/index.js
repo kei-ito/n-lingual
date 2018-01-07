@@ -97,7 +97,7 @@ test('nLingual', (test) => {
 									test('from minifiedJSON', (test) => {
 										const translator = new Translator(entries.toMinifiedJSON({silent: true}));
 										test(`use ${lang}`, () => {
-											translator.use(lang);
+											assert.equal(translator.use(lang), translator);
 										});
 										for (const [phrase, params, expected] of tests) {
 											test(`${phrase} ${JSON.stringify(params)} → ${expected}`, () => {
@@ -180,19 +180,19 @@ test('nLingual', (test) => {
 	});
 	test('Translator', (test) => {
 		test('set translations on construction', () => {
-			const translator = new Translator([
-				{en: 1},
-				['foo', {en: 'bar'}],
-			]);
+			const translator = new Translator({
+				langs: {en: 1},
+				phrases: {foo: {en: 'bar'}},
+			});
 			translator.use('en');
 			assert.equal(translator.translate('foo'), 'bar');
 		});
 		test('set translations later', () => {
 			const translator = new Translator();
-			translator.load([
-				{en: 1},
-				['foo', {en: 'bar'}],
-			]);
+			translator.load({
+				langs: {en: 1},
+				phrases: {foo: {en: 'bar'}},
+			});
 			translator.use('en');
 			assert.equal(translator.translate('foo'), 'bar');
 		});

@@ -1,17 +1,19 @@
-[
-  {
+{
+  "langs": {
     "en": 1
   },
-  ["foo", {
-    "en": "baz"
-  }],
-  ["bar2", {
-    "en": "bar:{{bar}}"
-  }],
-  ["bar3", {
-    "en": "bar3"
-  }],
-  ["N points", {
-    "en": "{{count}} {{count|point,points}}"
-  }]
-]
+  "phrases": {
+    "foo": {
+      "en": "baz"
+    },
+    "bar2": {
+      "en": "bar:{{bar}}"
+    },
+    "bar3": {
+      "en": "bar3"
+    },
+    "N points": {
+      "en": "{{count}} {{count|point,points}}"
+    }
+  }
+}

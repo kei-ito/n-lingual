@@ -3,8 +3,13 @@ const defaultPluralFunctions = require('../plural-rules');
 module.exports = class Translator extends Map {
 
 	constructor(entries, pluralFunctions = defaultPluralFunctions) {
-		super();
-		this.pluralFunctions = pluralFunctions;
+		Object.assign(
+			super(),
+			{
+				pluralFunctions,
+				translate: this.translate.bind(this),
+			}
+		);
 		if (entries) {
 			this.load(entries);
 		}
@@ -14,7 +19,7 @@ module.exports = class Translator extends Map {
 		const langs = {};
 		const translations = {};
 		let phrases;
-		if (Array.isArray(entries[0])) {
+		if (Array.isArray(entries)) {
 			for (const entry of entries) {
 				const lang = entry.shift();
 				const rule = entry.shift();
@@ -22,10 +27,18 @@ module.exports = class Translator extends Map {
 				translations[lang] = entry;
 			}
 		} else {
-			Object.assign(langs, entries.shift());
-			phrases = entries.map((entry) => entry[0]);
-			for (const lang of Object.keys(langs)) {
-				translations[lang] = entries.map(([, translations]) => translations[lang]);
+			Object.assign(langs, entries.langs);
+			const langKeys = Object.keys(langs);
+			for (const lang of langKeys) {
+				translations[lang] = [];
+			}
+			phrases = [];
+			for (const phrase of Object.keys(entries.phrases)) {
+				phrases.push(phrase);
+				const translation = entries.phrases[phrase];
+				for (const lang of langKeys) {
+					translations[lang].push(translation[lang]);
+				}
 			}
 		}
 		Object.assign(
@@ -55,6 +68,7 @@ module.exports = class Translator extends Map {
 				this.set(i, translations[i]);
 			}
 		}
+		return this;
 	}
 
 	translate(phrase, params) {

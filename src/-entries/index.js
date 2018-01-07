@@ -77,23 +77,32 @@ module.exports = class Entries extends Array {
 		};
 	}
 
-	load([langs, ...entries]) {
+	load({langs, phrases}) {
 		this.langs = langs;
-		for (const [phrase, translations] of entries) {
+		for (const phrase of Object.keys(phrases)) {
 			const entry = this.find(phrase);
 			if (entry) {
-				entry.setTranslations(translations);
+				entry.setTranslations(phrases[phrase]);
 			} else {
 				console.log(`Deleted: ${phrase}`);
 			}
 		}
 	}
 
+	getPhrases(options) {
+		const phrases = {};
+		for (const entry of this) {
+			const [phrase, translations] = entry.toJSON(options);
+			phrases[phrase] = translations;
+		}
+		return phrases;
+	}
+
 	toJSON(options) {
-		return [
-			this.langs,
-			...super.map((entry) => entry.toJSON(options)),
-		];
+		return {
+			langs: this.langs,
+			phrases: this.getPhrases(options),
+		};
 	}
 
 	toMinifiedJSON(options) {
