@@ -1,7 +1,8 @@
 module.exports = class Translator extends Map {
-
+	// http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
 	// https://developer.mozilla.org/docs/Mozilla/Localization/Localization_and_Plurals
 	// https://hg.mozilla.org/integration/autoland/file/tip/intl/locale/PluralForm.jsm
+	// https://github.com/mozilla/gecko-dev/blob/master/intl/locale/PluralForm.jsm
 	static pluralFunction(rule) {
 		switch (rule) {
 		case 0:
@@ -60,7 +61,7 @@ module.exports = class Translator extends Map {
 		case 12:
 			return (n) => {
 				const d = n % 100;
-				return n === 0 ? 0 : n === 1 ? 1 : n === 2 ? 2 : d >= 3 && d <= 10 ? 3 : d >= 11 ? 4 : 5;
+				return n === 0 ? 0 : n === 1 ? 1 : n === 2 ? 2 : isIn(d, 3, 10) ? 3 : isIn(d, 11, 99) ? 4 : 5;
 			};
 		case 13:
 			return (n) => {
@@ -174,5 +175,5 @@ module.exports = class Translator extends Map {
 };
 
 function isIn(x, min, max) {
-	return x % 1 === 0 && min <= x && x <= max;
+	return min <= x && x <= max;
 }
