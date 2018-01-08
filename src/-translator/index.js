@@ -80,7 +80,7 @@ module.exports = class Translator extends Function {
 
 	translate(phrase, params) {
 		const translated = this.dictionary.get(phrase);
-		if (typeof translated === 'undefined') {
+		if (typeof translated !== 'string') {
 			return phrase;
 		}
 		return translated

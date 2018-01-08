@@ -196,5 +196,21 @@ test('nLingual', (test) => {
 			translator.use('en');
 			assert.equal(translator.translate('foo'), 'bar');
 		});
+		test('ignore undefined', () => {
+			const translator = new Translator({
+				langs: {en: 1},
+				phrases: {},
+			});
+			translator.use('en');
+			assert.equal(translator.translate('foo'), 'foo');
+		});
+		test('ignore null', () => {
+			const translator = new Translator({
+				langs: {en: 1},
+				phrases: {foo: {en: null}},
+			});
+			translator.use('en');
+			assert.equal(translator.translate('foo'), 'foo');
+		});
 	});
 });
