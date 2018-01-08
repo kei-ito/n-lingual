@@ -1,4 +1,3 @@
-const console = require('console');
 const acorn = require('acorn');
 const MagicString = require('magic-string');
 const {walker} = require('@nlib/ast');
