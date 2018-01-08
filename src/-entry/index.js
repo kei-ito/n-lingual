@@ -27,9 +27,21 @@ module.exports = class Entry {
 		return this.entries.indexOf(this);
 	}
 
+	normalizeSrc(src) {
+		return (path.isAbsolute(src) ? path.relative(this.cwd, src) : src).split(path.sep).join('/');
+	}
+
 	addSrc(src, line) {
-		src = (path.isAbsolute(src) ? path.relative(this.cwd, src) : src).split(path.sep).join('/');
-		this.src.add(`${src}:${line}`);
+		this.src.add(`${this.normalizeSrc(src)}:${line}`);
+	}
+
+	resetSrc(src) {
+		src = this.normalizeSrc(src);
+		for (const label of this.src) {
+			if (label.startsWith(src)) {
+				this.src.delete(label);
+			}
+		}
 	}
 
 	setTranslations(translations) {

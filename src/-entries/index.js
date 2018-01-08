@@ -48,7 +48,14 @@ module.exports = class Entries extends Array {
 		return found;
 	}
 
+	resetSrc(src) {
+		for (const phrase of this) {
+			phrase.resetSrc(src);
+		}
+	}
+
 	parse(code, src, fn = noop) {
+		this.resetSrc(src);
 		const ast = acorn.parse(code, this.acorn);
 		const lineBreaks = new LineBreaks(code);
 		for (const {type, callee, arguments: args} of walker(ast)) {

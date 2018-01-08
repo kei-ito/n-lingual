@@ -178,13 +178,25 @@ test('nLingual', (test) => {
 			}
 		});
 	});
+	test('reset src', () => {
+		const entries = new Entries({strictMode: true});
+		entries.parse('translate("foo")', 'foo.js');
+		assert.deepEqual(
+			Array.from(entries).map((entry) => Array.from(entry.src)),
+			[['foo.js:1']]
+		);
+		entries.parse('\ntranslate("foo")', 'foo.js');
+		assert.deepEqual(
+			Array.from(entries).map((entry) => Array.from(entry.src)),
+			[['foo.js:2']]
+		);
+	});
 	test('Translator', (test) => {
 		test('set translations on construction', () => {
 			const translator = new Translator({
 				langs: {en: 1},
 				phrases: {foo: {en: 'bar'}},
 			});
-			translator.use('en');
 			assert.equal(translator.translate('foo'), 'bar');
 		});
 		test('set translations later', () => {
@@ -193,8 +205,31 @@ test('nLingual', (test) => {
 				langs: {en: 1},
 				phrases: {foo: {en: 'bar'}},
 			});
-			translator.use('en');
 			assert.equal(translator.translate('foo'), 'bar');
+		});
+		test('use current lang', () => {
+			const translator = new Translator();
+			translator.load({
+				langs: {en: 1},
+				phrases: {foo: {en: 'bar'}},
+			});
+			translator.load({
+				langs: {es: 1, en: 1},
+				phrases: {foo: {en: 'bar'}},
+			});
+			assert.equal(translator.lang, 'en');
+		});
+		test('use available lang', () => {
+			const translator = new Translator();
+			translator.load({
+				langs: {en: 1},
+				phrases: {foo: {en: 'bar'}},
+			});
+			translator.load({
+				langs: {es: 1},
+				phrases: {foo: {en: 'bar'}},
+			});
+			assert.equal(translator.lang, 'es');
 		});
 		test('ignore undefined', () => {
 			const translator = new Translator({
