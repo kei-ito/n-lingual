@@ -54,7 +54,7 @@ module.exports = class Entries extends Array {
 		for (const {type, callee, arguments: args} of walker(ast)) {
 			if (type === 'CallExpression' && this.functionNames.includes(callee.name) && args) {
 				const [arg] = args;
-				if (arg) {
+				if (arg && arg.type === 'Literal' && typeof arg.value === 'string') {
 					const entry = this.add({
 						phrase: arg.value,
 						src,
