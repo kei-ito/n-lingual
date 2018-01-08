@@ -30,6 +30,10 @@ module.exports = class Entries extends Array {
 		});
 	}
 
+	get usedPhrases() {
+		return super.filter(({src}) => 0 < src.size);
+	}
+
 	findIndex(phrase) {
 		return super.findIndex((entry) => entry.phrase === phrase);
 	}
@@ -90,15 +94,13 @@ module.exports = class Entries extends Array {
 			const entry = this.find(phrase);
 			if (entry) {
 				entry.setTranslations(phrases[phrase]);
-			} else {
-				console.log(`Deleted: ${phrase}`);
 			}
 		}
 	}
 
 	getPhrases(options) {
 		const phrases = {};
-		for (const entry of this) {
+		for (const entry of this.usedPhrases) {
 			const [phrase, translations] = entry.toJSON(options);
 			phrases[phrase] = translations;
 		}
@@ -115,7 +117,7 @@ module.exports = class Entries extends Array {
 	toMinifiedJSON(options) {
 		const result = [];
 		for (const lang of Object.keys(this.langs)) {
-			result.push([lang, this.langs[lang], ...super.map((entry) => {
+			result.push([lang, this.langs[lang], ...this.usedPhrases.map((entry) => {
 				const [, translations] = entry.toJSON(options);
 				return translations[lang];
 			})]);
