@@ -47,7 +47,9 @@ module.exports = class Entries extends Array {
 			found = new Entry(phrase, this);
 			this.push(found);
 		}
-		found.addSrc(src, line);
+		if (src) {
+			found.addSrc(src, line);
+		}
 		return found;
 	}
 
@@ -90,10 +92,7 @@ module.exports = class Entries extends Array {
 	load({langs, phrases}) {
 		this.langs = langs;
 		for (const phrase of Object.keys(phrases)) {
-			const entry = this.find(phrase);
-			if (entry) {
-				entry.setTranslations(phrases[phrase]);
-			}
+			this.add({phrase}).setTranslations(phrases[phrase]);
 		}
 	}
 
