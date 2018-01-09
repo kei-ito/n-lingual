@@ -19,13 +19,26 @@ module.exports = class Entries extends Array {
 		],
 		langs = {en: 1},
 		strictMode = false,
+		extractor = ({type, callee, arguments: args}, src, fn, lineBreaks) => {
+			if (type === 'CallExpression' && functionNames.includes(callee.name) && args) {
+				const [arg] = args;
+				if (arg && arg.type === 'Literal' && typeof arg.value === 'string') {
+					const entry = this.add({
+						phrase: arg.value,
+						src,
+						line: lineBreaks.lineAt(arg.start),
+					});
+					fn(entry, arg);
+				}
+			}
+		},
 	} = {}) {
 		Object.assign(super(), {
 			cwd,
 			acorn,
-			functionNames,
 			langs,
 			strictMode,
+			extractor,
 		});
 	}
 
@@ -63,19 +76,22 @@ module.exports = class Entries extends Array {
 		this.resetSrc(src);
 		const ast = acorn.parse(code, this.acorn);
 		const lineBreaks = new LineBreaks(code);
-		for (const {type, callee, arguments: args} of walker(ast)) {
-			if (type === 'CallExpression' && this.functionNames.includes(callee.name) && args) {
-				const [arg] = args;
-				if (arg && arg.type === 'Literal' && typeof arg.value === 'string') {
-					const entry = this.add({
-						phrase: arg.value,
-						src,
-						line: lineBreaks.lineAt(arg.start),
-					});
-					fn(entry, arg);
-				}
-			}
+		for (const node of walker(ast)) {
+			this.extractor(node, src, fn, lineBreaks);
 		}
+		// for (const {type, callee, arguments: args} of walker(ast)) {
+		// 	if (type === 'CallExpression' && this.functionNames.includes(callee.name) && args) {
+		// 		const [arg] = args;
+		// 		if (arg && arg.type === 'Literal' && typeof arg.value === 'string') {
+		// 			const entry = this.add({
+		// 				phrase: arg.value,
+		// 				src,
+		// 				line: lineBreaks.lineAt(arg.start),
+		// 			});
+		// 			fn(entry, arg);
+		// 		}
+		// 	}
+		// }
 	}
 
 	minify(code, src) {
