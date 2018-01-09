@@ -1,10 +1,10 @@
 const defaultPluralFunctions = require('../plural-rules');
 
-module.exports = class Translator extends Function {
+module.exports = class Translator {
 
 	constructor(entries, pluralFunctions = defaultPluralFunctions) {
 		Object.assign(
-			super(),
+			this,
 			{
 				pluralFunctions,
 				translate: this.translate.bind(this),
@@ -13,11 +13,6 @@ module.exports = class Translator extends Function {
 		if (entries) {
 			this.load(entries);
 		}
-		return new Proxy(this, {
-			apply(target, thisArg, argumentsList) {
-				return target.translate(...argumentsList);
-			},
-		});
 	}
 
 	load(entries) {

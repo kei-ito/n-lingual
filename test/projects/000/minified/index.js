@@ -1,5 +1,5 @@
 const console = require('console');
-const {translate, addPhrase} = require('n-lingual');
+const {translate, addPhrase} = require('');
 console.log(translate(0));
 console.log(translate(0));
 console.log(translate(1));
