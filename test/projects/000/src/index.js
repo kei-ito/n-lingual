@@ -6,4 +6,5 @@ console.log(translate('N days'));
 console.log(translate());
 const foo = addPhrase('foo');
 console.log(translate(foo));
+require('./foo');
 require('./bar');

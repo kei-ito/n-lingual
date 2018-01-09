@@ -26,7 +26,7 @@ test('nLingual', (test) => {
 						return readdir(path.join(directory, 'src'))
 						.then((names) => {
 							files.push(
-								...names
+								...names.reverse()
 								.filter((name) => name.endsWith('.js'))
 								.map((name) => path.join(directory, 'src', name))
 							);

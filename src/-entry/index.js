@@ -67,7 +67,7 @@ module.exports = class Entry {
 			}
 			translations[lang] = translation;
 		}
-		translations['@'] = Array.from(this.src);
+		translations['@'] = Array.from(this.src).sort();
 		return [this.phrase, translations];
 	}
 

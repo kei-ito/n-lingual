@@ -21,13 +21,31 @@
   },
   "phrases": {
     "foo": {
-      "rule1": "baz"
+      "rule1": "baz",
+      "@": {
+        "length": 5,
+        "0": "test/projects/000/src/bar.js:3",
+        "1": "test/projects/000/src/foo.js:3",
+        "2": "test/projects/000/src/index.js:3",
+        "3": "test/projects/000/src/index.js:4",
+        "4": "test/projects/000/src/index.js:7"
+      }
     },
     "bar1": {
-      "rule1": null
+      "rule1": null,
+      "@": {
+        "length": 2,
+        "0": "test/projects/000/src/bar.js:4",
+        "1": "test/projects/000/src/foo.js:4"
+      }
     },
     "bar2": {
-      "rule1": "bar:{{bar}}"
+      "rule1": "bar:{{bar}}",
+      "@": {
+        "length": 2,
+        "0": "test/projects/000/src/bar.js:5",
+        "1": "test/projects/000/src/foo.js:5"
+      }
     },
     "N days": {
       "rule0": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
@@ -47,7 +65,11 @@
       "rule14": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
       "rule15": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
       "rule16": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
-      "rule17": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}"
+      "rule17": "{{count}} {{count|f0,f1,f2,f3,f4,f5}}",
+      "@": {
+        "length": 1,
+        "0": "test/projects/000/src/index.js:5"
+      }
     }
   }
 }
