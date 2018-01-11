@@ -78,12 +78,14 @@ module.exports = class Translator {
 		if (typeof translated !== 'string') {
 			return phrase;
 		}
-		return translated
+		return params
+		? translated
 		.replace(/\{\{\s*([^{}\r\n]+?)\s*\}\}/g, (match, translation) => {
 			const [key, forms] = translation.split(/\s*\|\s*/);
 			const value = params[key];
 			return forms ? forms.split(/\s*,\s*/)[this.pluralFunction(value)] : value;
-		});
+		})
+		: translated;
 	}
 
 };
