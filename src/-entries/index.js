@@ -114,7 +114,7 @@ module.exports = class Entries extends Array {
 
 	getPhrases(options) {
 		const phrases = {};
-		for (const entry of this.usedPhrases) {
+		for (const entry of this.strictMode ? this.usedPhrases : this) {
 			const [phrase, translations] = entry.toJSON(options);
 			phrases[phrase] = translations;
 		}
@@ -131,7 +131,7 @@ module.exports = class Entries extends Array {
 	toMinifiedJSON(options) {
 		const result = [];
 		for (const lang of Object.keys(this.langs)) {
-			result.push([lang, this.langs[lang], ...this.usedPhrases.map((entry) => {
+			result.push([lang, this.langs[lang], ...(this.strictMode ? this.usedPhrases : this).map((entry) => {
 				const [, translations] = entry.toJSON(options);
 				return translations[lang];
 			})]);

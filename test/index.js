@@ -49,7 +49,7 @@ test('nLingual', (test) => {
 										splitted[splitted.length - 2] = 'minified';
 										return readFile(splitted.join(path.sep), 'utf8')
 										.then((expected) => {
-											test.lines(result.code, expected);
+											test.compare(result.code, expected);
 										});
 									});
 								});
@@ -67,14 +67,14 @@ test('nLingual', (test) => {
 						return readFile(path.join(directory, 'expected-translation.json'), 'utf8')
 						.then(JSON.parse)
 						.then((expected) => {
-							test.object(entries.toJSON(), expected);
+							test.compare(entries.toJSON(), expected);
 						});
 					});
 					test('toMinifiedJSON', (test) => {
 						return readFile(path.join(directory, 'expected-minified.json'), 'utf8')
 						.then(JSON.parse)
 						.then((expected) => {
-							test.object(entries.toMinifiedJSON({silent: true}), expected);
+							test.compare(entries.toMinifiedJSON({silent: true}), expected);
 						});
 					});
 					test('run tests', (test) => {
@@ -171,7 +171,7 @@ test('nLingual', (test) => {
 							throw new Error('Resolved unexpectedly');
 						})
 						.catch((error) => {
-							test.object(error, {code: 'ENOTTRANSLATED'});
+							test.compare(error, {code: 'ENOTTRANSLATED'});
 						});
 					});
 				});
@@ -190,6 +190,39 @@ test('nLingual', (test) => {
 			Array.from(entries).map((entry) => Array.from(entry.src)),
 			[['foo.js:2']]
 		);
+	});
+	test('keep unused phrases', (test) => {
+		const entries = new Entries();
+		entries.load({
+			langs: {en: 1},
+			phrases: {
+				bar: {en: 'bar'},
+			},
+		});
+		test.compare(entries.toJSON(), {
+			langs: {en: 1},
+			phrases: {
+				bar: {
+					'en': 'bar',
+					'@': {length: 0},
+				},
+			},
+		});
+	});
+	test('ignore unused phrases', (test) => {
+		const entries = new Entries({strictMode: true});
+		entries.load({
+			langs: {en: 1},
+			phrases: {
+				bar: {en: 'bar'},
+			},
+		});
+		test.compare(entries.toJSON(), {
+			langs: {en: 1},
+			phrases: {
+				bar: undefined,
+			},
+		});
 	});
 	test('Translator', (test) => {
 		test('set translations on construction', () => {
