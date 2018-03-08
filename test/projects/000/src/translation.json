@@ -20,6 +20,9 @@
     "rule17": 17
   },
   "phrases": {
+    "unused": {
+      "rule1": "unused phrase"
+    },
     "foo": {
       "rule1": "baz"
     },

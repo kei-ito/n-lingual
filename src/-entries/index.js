@@ -42,8 +42,13 @@ module.exports = class Entries extends Array {
 		});
 	}
 
-	get usedPhrases() {
-		return super.filter(({src}) => 0 < src.size);
+	checkUsage() {
+		for (const entry of this) {
+			if (!(0 < entry.src.size)) {
+				throw Object.assign(new Error(`${entry.phrase} is not used`), {code: 'EUNUSED'});
+			}
+		}
+		return this;
 	}
 
 	findIndex(phrase) {
@@ -79,26 +84,11 @@ module.exports = class Entries extends Array {
 		for (const node of walker(ast)) {
 			this.extractor(node, src, fn, lineBreaks);
 		}
-		// for (const {type, callee, arguments: args} of walker(ast)) {
-		// 	if (type === 'CallExpression' && this.functionNames.includes(callee.name) && args) {
-		// 		const [arg] = args;
-		// 		if (arg && arg.type === 'Literal' && typeof arg.value === 'string') {
-		// 			const entry = this.add({
-		// 				phrase: arg.value,
-		// 				src,
-		// 				line: lineBreaks.lineAt(arg.start),
-		// 			});
-		// 			fn(entry, arg);
-		// 		}
-		// 	}
-		// }
 	}
 
 	minify(code, src) {
 		const s = new MagicString(code);
-		this.parse(code, src, (entry, node) => {
-			s.overwrite(node.start, node.end, `${entry.index}`);
-		});
+		this.parse(code, src, (entry, node) => s.overwrite(node.start, node.end, `${entry.index}`));
 		return {
 			code: s.toString(),
 			map: s.generateMap(),
@@ -114,7 +104,7 @@ module.exports = class Entries extends Array {
 
 	getPhrases(options) {
 		const phrases = {};
-		for (const entry of this.strictMode ? this.usedPhrases : this) {
+		for (const entry of this.strictMode ? this.checkUsage() : this) {
 			const [phrase, translations] = entry.toJSON(options);
 			phrases[phrase] = translations;
 		}
@@ -131,7 +121,7 @@ module.exports = class Entries extends Array {
 	toMinifiedJSON(options) {
 		const result = [];
 		for (const lang of Object.keys(this.langs)) {
-			result.push([lang, this.langs[lang], ...(this.strictMode ? this.usedPhrases : this).map((entry) => {
+			result.push([lang, this.langs[lang], ...(this.strictMode ? this.checkUsage() : this).map((entry) => {
 				const [, translations] = entry.toJSON(options);
 				return translations[lang];
 			})]);

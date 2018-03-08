@@ -171,7 +171,7 @@ test('nLingual', (test) => {
 							throw new Error('Resolved unexpectedly');
 						})
 						.catch((error) => {
-							test.compare(error, {code: 'ENOTTRANSLATED'});
+							test.compare(error, {code: (code) => ['ENOTTRANSLATED', 'EUNUSED'].includes(code)});
 						});
 					});
 				});
@@ -206,21 +206,6 @@ test('nLingual', (test) => {
 					'en': 'bar',
 					'@': {length: 0},
 				},
-			},
-		});
-	});
-	test('ignore unused phrases', (test) => {
-		const entries = new Entries({strictMode: true});
-		entries.load({
-			langs: {en: 1},
-			phrases: {
-				bar: {en: 'bar'},
-			},
-		});
-		test.compare(entries.toJSON(), {
-			langs: {en: 1},
-			phrases: {
-				bar: undefined,
 			},
 		});
 	});
