@@ -109,10 +109,10 @@ test('nLingual', (test) => {
 								});
 							});
 							test('Unknown rule', () => {
-								assert.throws(() => {
-									const translator = new Translator(entries.toJSON({silent: true}));
-									translator.use();
-								});
+								const translator = new Translator(entries.toJSON({silent: true}));
+								const currentLang = translator.lang;
+								translator.use();
+								assert.equal(translator.lang, currentLang);
 							});
 						});
 					});

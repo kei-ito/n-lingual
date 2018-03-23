@@ -53,23 +53,23 @@ module.exports = class Translator {
 	}
 
 	use(lang) {
-		this.lang = lang;
-		this.pluralFunction = this.pluralFunctions[this.langs[lang]];
-		if (!this.pluralFunction) {
-			throw new Error(`Invalid plural rule: ${this.langs[lang]}`);
-		}
-		const dictionary = new Map();
-		const translations = this.translations[lang];
-		if (this.phrases) {
-			for (let i = 0; i < translations.length; i++) {
-				dictionary.set(this.phrases[i], translations[i]);
+		const pluralFunction = this.pluralFunctions[this.langs[lang]];
+		if (pluralFunction) {
+			this.lang = lang;
+			this.pluralFunction = pluralFunction;
+			const dictionary = new Map();
+			const translations = this.translations[lang];
+			if (this.phrases) {
+				for (let i = 0; i < translations.length; i++) {
+					dictionary.set(this.phrases[i], translations[i]);
+				}
+			} else {
+				for (let i = 0; i < translations.length; i++) {
+					dictionary.set(i, translations[i]);
+				}
 			}
-		} else {
-			for (let i = 0; i < translations.length; i++) {
-				dictionary.set(i, translations[i]);
-			}
+			this.dictionary = dictionary;
 		}
-		this.dictionary = dictionary;
 		return this;
 	}
 
