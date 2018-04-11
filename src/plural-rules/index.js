@@ -2,7 +2,7 @@
 // https://developer.mozilla.org/docs/Mozilla/Localization/Localization_and_Plurals
 // https://hg.mozilla.org/integration/autoland/file/tip/intl/locale/PluralForm.jsm
 // https://github.com/mozilla/gecko-dev/blob/master/intl/locale/PluralForm.jsm
-module.exports = [
+exports.pluralRules = [
 	() => {
 		return 0;
 	},

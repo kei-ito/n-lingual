@@ -1,4 +1,4 @@
-module.exports = class LineBreaks extends Array {
+exports.LineBreaks = class LineBreaks extends Array {
 
 	constructor(source) {
 		super();

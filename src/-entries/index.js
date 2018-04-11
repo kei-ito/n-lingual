@@ -1,11 +1,11 @@
 const acorn = require('acorn');
 const MagicString = require('magic-string');
 const {walker} = require('@nlib/ast');
-const Entry = require('../-entry');
-const LineBreaks = require('../-line-breaks');
+const {Entry} = require('../-entry');
+const {LineBreaks} = require('../-line-breaks');
 const noop = () => {};
 
-module.exports = class Entries extends Array {
+exports.Entries = class Entries extends Array {
 
 	constructor({
 		cwd = process.cwd(),

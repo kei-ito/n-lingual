@@ -1,6 +1,6 @@
 const path = require('path');
 const console = require('console');
-module.exports = class Entry {
+exports.Entry = class Entry {
 
 	constructor(phrase, entries) {
 		Object.assign(this, {

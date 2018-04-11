@@ -1,6 +1,5 @@
-const defaultPluralFunctions = require('../plural-rules');
-
-module.exports = class Translator {
+const {pluralRules: defaultPluralFunctions} = require('../plural-rules');
+exports.Translator = class Translator {
 
 	constructor(entries, pluralFunctions = defaultPluralFunctions) {
 		Object.assign(
@@ -41,15 +40,8 @@ module.exports = class Translator {
 				}
 			}
 		}
-		Object.assign(
-			this,
-			{
-				langs,
-				phrases,
-				translations,
-			}
-		);
-		this.use(this.lang in langs ? this.lang : Object.keys(langs)[0]);
+		Object.assign(this, {langs, phrases, translations})
+		.use(this.lang in langs ? this.lang : Object.keys(langs)[0]);
 	}
 
 	use(lang) {

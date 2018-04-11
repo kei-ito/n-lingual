@@ -1,2 +1,5 @@
-exports.Entries = require('./-entries');
-exports.Translator = require('./-translator');
+Object.assign(
+	exports,
+	require('./-entries'),
+	require('./-translator')
+);
