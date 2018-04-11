@@ -1,5 +1,7 @@
 # n-lingual
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/kei-ito/n-lingual.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/kei-ito/n-lingual.svg?branch=master)](https://travis-ci.org/kei-ito/n-lingual)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/kei-ito/n-lingual?branch=master&svg=true)](https://ci.appveyor.com/project/kei-ito/n-lingual/branch/master)
 [![codecov](https://codecov.io/gh/kei-ito/n-lingual/branch/master/graph/badge.svg)](https://codecov.io/gh/kei-ito/n-lingual)
