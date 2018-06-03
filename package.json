@@ -19,7 +19,7 @@
     "test_coverage": "nyc --reporter=lcov --reporter=text npm test"
   },
   "dependencies": {
-    "@nlib/ast": "^0.2.2",
+    "@nlib/ast": "^0.3.0",
     "acorn": "^5.5.3",
     "magic-string": "^0.24.0"
   },
