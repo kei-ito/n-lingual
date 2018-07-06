@@ -18,7 +18,7 @@
 		"test": "tap --coverage test/*.js"
 	},
 	"dependencies": {
-		"@nlib/ast": "^0.2.2",
+		"@nlib/ast": "^0.3.1",
 		"acorn": "^5.6.0",
 		"magic-string": "^0.24.1"
 	},
