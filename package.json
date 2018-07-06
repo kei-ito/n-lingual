@@ -14,7 +14,8 @@
 	"repository": "kei-ito/n-lingual",
 	"main": "src/index.js",
 	"scripts": {
-		"test": "tap test/*.js --coverage"
+		"lint": "eslint src test/*.js",
+		"test": "tap --coverage test/*.js"
 	},
 	"dependencies": {
 		"@nlib/ast": "^0.2.2",
