@@ -1,3 +1,4 @@
+const isIn = (x, min, max) => min <= x && x <= max;
 // http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
 // https://developer.mozilla.org/docs/Mozilla/Localization/Localization_and_Plurals
 // https://hg.mozilla.org/integration/autoland/file/tip/intl/locale/PluralForm.jsm
@@ -84,7 +85,3 @@ exports.pluralRules = [
 		return n === 0 ? 0 : 1;
 	},
 ];
-
-function isIn(x, min, max) {
-	return min <= x && x <= max;
-}
