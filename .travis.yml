@@ -3,12 +3,24 @@ node_js:
 - '10'
 - '8'
 - '6'
+before_install:
+- 'export GREENKEEPER=$([[ $(node -v) == v10.* ]]; echo $?)'
+- if [[ ${GREENKEEPER} -eq 0 ]]; then
+  npm install -g greenkeeper-lockfile;
+  fi
 install:
 - npm install
+before_script:
+- if [[ ${GREENKEEPER} -eq 0 ]]; then
+  greenkeeper-lockfile-update;
+  fi
 script:
 - npm test
 - npm run lint
 after_success:
+- if [[ ${GREENKEEPER} -eq 0 ]]; then
+  greenkeeper-lockfile-upload;
+  fi
 - npm install -g codecov
 - codecov
 deploy:
@@ -19,3 +31,6 @@ deploy:
   on:
     tags: true
     repo: kei-ito/n-lingual
+env:
+  global:
+    secure: vajUtcLf3WRXVRqDsue/LDejiyTz9Znhg9RURMzLr6HgcFPhpIGWd/ZKXcHiQStXoqMeNimKVD55K3E85mNo3HNKLJcS9aa2nxv9p0n872JvPB+L5/0YOC4Ndx9GCmwgkIs4qvvKbUJcMZjDyqUP4EIhdOGzss8NEjHlj8ddad7tuQJKKX1AJ72oweGN7O8c5ZhAVC58KZX/yoLAZJ25z6r4On8T5nMV+Q+b7TPdE6MwusWbFwZQnpKC1hPgnJ4KbEUlhDT3ZOCvNKiLod5tOzrkVl+/9SEjmzAekWW2U66VV7iWnJ7jR+F4IgUX6iy4SN2fFP+/25o3v5JIzLlN7Mlc+pVu52a9eF92JeNWcFI+oXW8+aVLNU0AJ8NmLCy46xbd3x1sKGTNdBs37SjyTKF8IdneJQdCN9NTSBHhQ8RFQhBeHR2upWioxZaI8KKyADclzJSBRRGOVFOyDhnx0CE19tN8quHLzmYq/OGRrJ79ykja74AqH/QcxNxQpFEPY1Wb0hgQO0dofg4Tm6ZdkPoUlYpVP/F7cDMgcoeyoPHMMw/7rSroi7sLtCPZt5Gv3DMgm6Az+hQG+nYiGnStfZ9IIWJZV12HV15KXk7CNwBPGACrmOTpxp4AO7iyFE2oVRKO9JTYT64swdYz8ljwQOvcJAUoQewCIW50q2hw2sE=
