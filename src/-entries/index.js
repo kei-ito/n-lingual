@@ -103,12 +103,16 @@ exports.Entries = class Entries extends Array {
 	}
 
 	getPhrases(options) {
-		const phrases = {};
+		const phrases = [];
 		for (const entry of this.strictMode ? this.checkUsage() : this) {
 			const [phrase, translations] = entry.toJSON(options);
-			phrases[phrase] = translations;
+			phrases.push([phrase, translations]);
 		}
-		return phrases;
+		phrases.sort((a, b) => a[0] < b[0] ? -1 : 1);
+		return phrases.reduce((map, [phrase, translations]) => {
+			map[phrase] = translations;
+			return map;
+		}, {});
 	}
 
 	toJSON(options) {

@@ -50,7 +50,7 @@ exports.Entry = class Entry {
 		}
 	}
 
-	toJSON({silent = false} = {}) {
+	toJSON({silent = false, noSource = false} = {}) {
 		const translations = {};
 		for (const lang of this.langs) {
 			let translation = this.translations[lang];
@@ -67,7 +67,9 @@ exports.Entry = class Entry {
 			}
 			translations[lang] = translation;
 		}
-		translations['@'] = Array.from(this.src).sort();
+		if (!noSource) {
+			translations['@'] = Array.from(this.src).sort();
+		}
 		return [this.phrase, translations];
 	}
 
