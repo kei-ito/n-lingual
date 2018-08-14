@@ -4,33 +4,27 @@ node_js:
 - '8'
 - '6'
 before_install:
-- 'export GREENKEEPER=$([[ $(node -v) == v10.* ]]; echo $?)'
-- if [[ ${GREENKEEPER} -eq 0 ]]; then
-  npm install -g greenkeeper-lockfile;
-  fi
+- export GREENKEEPER=$([[ $(node -v) == v10.* ]]; echo $?)
+- if [[ ${GREENKEEPER} -eq 0 ]]; then npm install -g greenkeeper-lockfile; fi
 install:
 - npm install
 before_script:
-- if [[ ${GREENKEEPER} -eq 0 ]]; then
-  greenkeeper-lockfile-update;
-  fi
+- if [[ ${GREENKEEPER} -eq 0 ]]; then greenkeeper-lockfile-update; fi
 script:
 - npm test
 - npm run lint
 after_success:
-- if [[ ${GREENKEEPER} -eq 0 ]]; then
-  greenkeeper-lockfile-upload;
-  fi
+- if [[ ${GREENKEEPER} -eq 0 ]]; then greenkeeper-lockfile-upload; fi
 - npm install -g codecov
 - codecov
+env:
+  global:
+    secure: vajUtcLf3WRXVRqDsue/LDejiyTz9Znhg9RURMzLr6HgcFPhpIGWd/ZKXcHiQStXoqMeNimKVD55K3E85mNo3HNKLJcS9aa2nxv9p0n872JvPB+L5/0YOC4Ndx9GCmwgkIs4qvvKbUJcMZjDyqUP4EIhdOGzss8NEjHlj8ddad7tuQJKKX1AJ72oweGN7O8c5ZhAVC58KZX/yoLAZJ25z6r4On8T5nMV+Q+b7TPdE6MwusWbFwZQnpKC1hPgnJ4KbEUlhDT3ZOCvNKiLod5tOzrkVl+/9SEjmzAekWW2U66VV7iWnJ7jR+F4IgUX6iy4SN2fFP+/25o3v5JIzLlN7Mlc+pVu52a9eF92JeNWcFI+oXW8+aVLNU0AJ8NmLCy46xbd3x1sKGTNdBs37SjyTKF8IdneJQdCN9NTSBHhQ8RFQhBeHR2upWioxZaI8KKyADclzJSBRRGOVFOyDhnx0CE19tN8quHLzmYq/OGRrJ79ykja74AqH/QcxNxQpFEPY1Wb0hgQO0dofg4Tm6ZdkPoUlYpVP/F7cDMgcoeyoPHMMw/7rSroi7sLtCPZt5Gv3DMgm6Az+hQG+nYiGnStfZ9IIWJZV12HV15KXk7CNwBPGACrmOTpxp4AO7iyFE2oVRKO9JTYT64swdYz8ljwQOvcJAUoQewCIW50q2hw2sE=
 deploy:
   provider: npm
   email: kei.itof@gmail.com
   api_key:
-    secure: Adh54EaKIoIT17kvrTaFZHRRpSKgphlUgYTyw754qxKEteFiaSAtPmTjpVXUtPLkhFCEAvs9Nrkh3G6QThFn+QmEwR4BASW5/Dy1/CwRy6v4TPTcFoblPCruywGxsu077Pa/CEolv/eeZYCiBLZ4UwFnO9owTw+Bx9Cgggn4hPCZZXTzc4KGOXl9fRQ3MMOPktySXQN0L1x0dNZs5+rrxr/v+gtDiwRplDZaxxC4GgRI4UQU8Rp/oVUm6FBIERGahcaaQaAsZKelk2qdmhsN4lTnIs5H5upsVc+mZLhq/3fHRiKZ168L750WFXGsKC2hu/e5e658pQbgy21HvnnjeV6T6Gn+k+faf6xMG2YoWe/XG5U4o86iaRuqF3IHUzQStzVA9+sxLGJC5Ud667BZd5ae626W3O7/A+1e4nvlBQYEMZps6HIk1Pw3fRPBOGT7ClRaBc1W/GBXEZJTi0mSdEYmo0cM+1RxDgXrnMpWZFn84EBssWV4SQkp4w4anXYLXdWf+DRzrZvkGNP34JLnCCr5Tod+anRDjC5yWczB9GqaEw2AHNr1nBpPBZIon3LNFbC26F3tBojdvjUznjLNcSB5dcF/hCqB8fkqwxIc+D0sImtr8vt5Td2saQvLhvWsZx9F+ix4xtKDvN1/g+f8JIJR42MAGUO8GTyCcwez3vI=
+    secure: qYJP5YPD0oKG4DIMQnZ6u+kRIyphKfIA51IGmn2OQVbWJO9cFKoB5oWnHOwlhiHKQ5fItR00cH5WktE35GYK+qTy/5i8ODKrr3HI0QIRX/OilqeQjd+xR8KLGpjfD3EkNiT1VgLsLBeCujE6+apkJDSVl8spN0ubgcrsusvrzrcEC4Yk/LJgC8m3GKDZsoQxq7SPhbcjicFbDKwc8mkmlgyI2bdb6dxVhke+2Pc3uK/Rl6KtAWQ2Twk8uFSvyKiCsAiQJSStVrXAugv+iLYC4curlH9wFNxfHN6rK25s5Z2POZMksEejt+hZvR2DJnRMBWB5krPolm/2FpKdbzGpPb9IXJLOoCILhuT+8ub2Tj1WJctUCXggtCJIh22nU4peP9v2/xFz3s8T3XCuPhK+bd7qN5JxhyShujOW4XEWWLqU0lVN/UaYT/XaEmXj68s/I+68idUc8SaMcJYmpjuki40oWJwFsuVr1cZaPbKbdqPn4w2sw1cRF6hE+GgH4Jrfz7WOwQ76RqYDDjXIcpwXLkhCGKn3K/e6hk64p7sx2hJfSeJrl48vRDsbO0FOKwbX2nTFnJ+X7zUvOL8iwriRLbUEBmoJ9kUDg7h2B8mK/c+W5a3GTDpx5eEa9YnaPqFG9+mqSzCc3ZE2XooF7DOcdaXAO/SCmIWE7qZqNlj/ojM=
   on:
     tags: true
     repo: kei-ito/n-lingual
-env:
-  global:
-    secure: vajUtcLf3WRXVRqDsue/LDejiyTz9Znhg9RURMzLr6HgcFPhpIGWd/ZKXcHiQStXoqMeNimKVD55K3E85mNo3HNKLJcS9aa2nxv9p0n872JvPB+L5/0YOC4Ndx9GCmwgkIs4qvvKbUJcMZjDyqUP4EIhdOGzss8NEjHlj8ddad7tuQJKKX1AJ72oweGN7O8c5ZhAVC58KZX/yoLAZJ25z6r4On8T5nMV+Q+b7TPdE6MwusWbFwZQnpKC1hPgnJ4KbEUlhDT3ZOCvNKiLod5tOzrkVl+/9SEjmzAekWW2U66VV7iWnJ7jR+F4IgUX6iy4SN2fFP+/25o3v5JIzLlN7Mlc+pVu52a9eF92JeNWcFI+oXW8+aVLNU0AJ8NmLCy46xbd3x1sKGTNdBs37SjyTKF8IdneJQdCN9NTSBHhQ8RFQhBeHR2upWioxZaI8KKyADclzJSBRRGOVFOyDhnx0CE19tN8quHLzmYq/OGRrJ79ykja74AqH/QcxNxQpFEPY1Wb0hgQO0dofg4Tm6ZdkPoUlYpVP/F7cDMgcoeyoPHMMw/7rSroi7sLtCPZt5Gv3DMgm6Az+hQG+nYiGnStfZ9IIWJZV12HV15KXk7CNwBPGACrmOTpxp4AO7iyFE2oVRKO9JTYT64swdYz8ljwQOvcJAUoQewCIW50q2hw2sE=
