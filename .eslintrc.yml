@@ -1,0 +1,5 @@
+extends:
+  - './node_modules/@nlib/lint/.eslintrc.json'
+env:
+  node: true
+  es6: true
