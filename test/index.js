@@ -37,9 +37,7 @@ t.test('nLingual', (t) => {
                             t.test(file, (t) => {
                                 return readFile(file, 'utf8')
                                 .then((code) => {
-                                    const src = index % 2 === 0
-									? path.relative(process.cwd(), file)
-									: file;
+                                    const src = index % 2 === 0 ? path.relative(process.cwd(), file) : file;
                                     t.test('parse', (t) => {
                                         entries.parse(code, src);
                                         t.end();
@@ -162,9 +160,7 @@ t.test('nLingual', (t) => {
                             t.test(file, () => {
                                 return readFile(file, 'utf8')
                                 .then((code) => {
-                                    const src = index % 2 === 0
-									? path.relative(process.cwd(), file)
-									: file;
+                                    const src = index % 2 === 0 ? path.relative(process.cwd(), file) : file;
                                     entries.parse(code, src);
                                 });
                             });
