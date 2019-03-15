@@ -25,7 +25,7 @@
 	"devDependencies": {
 		"@nlib/lint": "^3.3.3",
 		"@nlib/util": "^0.1.6",
-		"eslint": "^5.13.0",
+		"eslint": "^5.15.2",
 		"tap": "^12.5.3"
 	}
 }
