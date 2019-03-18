@@ -23,9 +23,9 @@
 		"magic-string": "^0.25.2"
 	},
 	"devDependencies": {
-		"@nlib/lint": "^3.3.3",
-		"@nlib/util": "^0.1.6",
-		"eslint": "^5.13.0",
-		"tap": "^12.5.3"
+		"@nlib/lint": "3.3.3",
+		"@nlib/util": "0.1.6",
+		"eslint": "5.13.0",
+		"tap": "12.5.3"
 	}
 }
